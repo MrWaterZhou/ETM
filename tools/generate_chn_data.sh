@@ -19,7 +19,7 @@ cat $save_path/msg.log.sorted | cut -f 3 | sed -r 's/"//g' > $save_path/msg.txt
 cat $save_path/msg.txt | parallel --pipe -k ./THULAC/thulac -model_dir ./THULAC/models -seg_only -t2s > $save_path/msg.segment
 # prepare data
 ## get vocab
-cat $save_path/msg.segment sed 's/ /\n/g' | sed '/^$/d' | sort | uniq -c | sort > $save_path/vocab.freq
+cat $save_path/msg.segment | sed 's/ /\n/g' | sed '/^$/d' | sort | uniq -c | sort > $save_path/vocab.freq
 
 
 
