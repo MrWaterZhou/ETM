@@ -17,8 +17,8 @@ def convert_to_bow(vocab: dict, segment: list):
 
 if __name__ == '__main__':
     vocab = open(sys.argv[1], 'r').readlines()
-    vocab_pkl = list([line.strip().split()[1] for line in vocab])
-    vocab = {w.strip().split()[1]: i for i, w in enumerate(vocab)}
+    vocab_pkl = list([line.strip().split(' ')[1] for line in vocab if len(line.strip().split(' '))==2])
+    vocab = {w: i for i, w in enumerate(vocab_pkl)}
     segments = open(sys.argv[2], 'r').readlines()
     path_save = sys.argv[3]
 
