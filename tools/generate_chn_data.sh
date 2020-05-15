@@ -14,7 +14,7 @@ rm $save_path/id.tmp $save_path/from.tmp $save_path/msg.tmp
 
 # sort and uniq
 sort -n $save_path/msg.log | uniq > $save_path/msg.log.sorted
-cat $save_path/msg.log.sorted | cut -f 3 | sef -r 's/"//g' > $save_path/msg.txt
+cat $save_path/msg.log.sorted | cut -f 3 | sed -r 's/"//g' > $save_path/msg.txt
 
 # segment
 cat $save_path/msg.txt | parallel --pipe -k ./THULAC/thulac -model_dir ./THULAC/models -seg_only -t2s > $save_path/msg.segment
