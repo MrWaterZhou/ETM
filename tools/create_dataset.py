@@ -2,6 +2,7 @@ import sys
 from scipy.io import savemat
 import os
 import pickle
+import multiprocessing
 
 def convert_to_bow(vocab: dict, segment: list):
     result = {}
