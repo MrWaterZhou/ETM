@@ -20,7 +20,7 @@ sed -i -r 's/#[0-9]{3}//g' $save_path/msg.txt
 cat $save_path/msg.txt | parallel --pipe -k ./THULAC/thulac -model_dir ./THULAC/models -t2s > $save_path/msg.segment
 # prepare data
 ## get vocab
-#cat $save_path/msg.segment | sed -r 's/\_[a-z]+//g' | sed 's/ /\n/g' | sed '/^$/d' | sort | uniq -c | sort > $save_path/vocab.freq
+#cat $save_path/msg.segment | sed -r 's/\_[a-z]+//g' | sed 's/ /\n/g' | sed '/^$/d' | sort | uniq -c | sort -n > $save_path/vocab.freq
 
 
 
