@@ -1,11 +1,10 @@
 log_path=$1
 save_path=$2
 
-rm -rf $save_path
-mkdir $save_path
-
+#rm -rf $save_path
+#mkdir $save_path
 # get log
-sh extract_log.sh $log_path $save_path/all.log
+#sh extract_log.sh $log_path $save_path/all.log
 cat $save_path/all.log | parallel --pipe -k  jq .id > $save_path/id.tmp
 cat $save_path/all.log | parallel --pipe -k  jq .msg > $save_path/msg.tmp
 cat $save_path/all.log | parallel --pipe -k  jq .from > $save_path/from.tmp
