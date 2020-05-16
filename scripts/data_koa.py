@@ -22,16 +22,6 @@ with open('stops.txt', 'r') as f:
 # Read data
 print('reading data...')
 data = open(sys.argv[1],'r').readlines()
-np.random.shuffle(data)
-train_size = int(len(data)*0.8)
-train_data = data[:train_size]
-test_data = data[train_size:]
-
-# train_data = fetch_20newsgroups(subset='train')
-# test_data = fetch_20newsgroups(subset='test')
-
-init_docs_tr = [line.strip().split() for line in train_data]
-init_docs_ts = [line.strip().split() for line in test_data]
 
 # init_docs_tr = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', train_data.data[doc]) for doc in range(len(train_data.data))]
 # init_docs_ts = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', test_data.data[doc]) for doc in range(len(test_data.data))]
@@ -42,10 +32,7 @@ def contains_punctuation(w):
 def contains_numeric(w):
     return any(char.isdigit() for char in w)
     
-init_docs = init_docs_tr + init_docs_ts
-init_docs = [[w.lower() for w in init_docs[doc] if not contains_punctuation(w)] for doc in range(len(init_docs))]
-init_docs = [[w for w in init_docs[doc] if not contains_numeric(w)] for doc in range(len(init_docs))]
-init_docs = [[w for w in init_docs[doc] if len(w)>1] for doc in range(len(init_docs))]
+init_docs = [line.strip().split() for line in data if len(line.strip().split())>0]
 init_docs = [" ".join(init_docs[doc]) for doc in range(len(init_docs))]
 
 # Create count vectorizer
