@@ -26,10 +26,11 @@ class MySentences(object):
  
     def __iter__(self):
         for line in open(self.filename):
-            yield line.split()
+            yield line.strip().split()
 
 # Gensim code to obtain the embeddings
-sentences = MySentences(args.data_file) # a memory-friendly iterator
+sentences = open(args.data_file,'r').readlines()
+sentences = [line.strip().split() for line in sentences] # a memory-friendly iterator
 model = gensim.models.Word2Vec(sentences, min_count=args.min_count, sg=args.sg, size=args.dim_rho, 
     iter=args.iters, workers=args.workers, negative=args.negative_samples, window=args.window_size)
 

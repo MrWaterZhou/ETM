@@ -290,6 +290,7 @@ def evaluate(m, source, tc=False, td=False):
         print('*' * 100)
         if tc or td:
             beta = beta.data.cpu().numpy()
+            #beta = beta.data.cuda().numpy()
             if tc:
                 print('Computing topic coherence...')
                 get_topic_coherence(beta, train_tokens, vocab)
