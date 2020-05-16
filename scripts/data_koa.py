@@ -9,6 +9,7 @@ from scipy.io import savemat, loadmat
 import re
 import string
 import os
+import sys
 
 # Maximum / minimum document frequency
 max_df = 0.7
@@ -20,11 +21,20 @@ with open('stops.txt', 'r') as f:
 
 # Read data
 print('reading data...')
-train_data = fetch_20newsgroups(subset='train')
-test_data = fetch_20newsgroups(subset='test')
+data = open(sys.argv[1],'r').readlines()
+np.random.shuffle(data)
+train_size = int(len(data)*0.8)
+train_data = data[:train_size]
+test_data = data[train_size:]
 
-init_docs_tr = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', train_data.data[doc]) for doc in range(len(train_data.data))]
-init_docs_ts = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', test_data.data[doc]) for doc in range(len(test_data.data))]
+# train_data = fetch_20newsgroups(subset='train')
+# test_data = fetch_20newsgroups(subset='test')
+
+init_docs_tr = [line.strip().split() for line in train_data]
+init_docs_ts = [line.strip().split() for line in test_data]
+
+# init_docs_tr = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', train_data.data[doc]) for doc in range(len(train_data.data))]
+# init_docs_ts = [re.findall(r'''[\w']+|[.,!?;-~{}`´_<=>:/@*()&'$%#"]''', test_data.data[doc]) for doc in range(len(test_data.data))]
 
 def contains_punctuation(w):
     return any(char in string.punctuation for char in w)
