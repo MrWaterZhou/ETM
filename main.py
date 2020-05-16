@@ -211,8 +211,7 @@ def visualize(m, show_emb=True):
 
     m.eval()
 
-    queries = ['兵', '城堡', '打野', '银', '银矿', '休息',
-               '王国', '资源']
+    queries = random.choices(vocab,k=20)
 
     ## visualize topics using monte carlo
     with torch.no_grad():
@@ -379,8 +378,7 @@ else:
                 rho_etm = model.rho.weight.cpu()
             except:
                 rho_etm = model.rho.cpu()
-            queries = ['兵', '城堡', '打野', '银', '银矿', '休息',
-                       '王国', '资源']
+            queries = random.choices(vocab,k=20)
 
             print('\n')
             print('ETM embeddings...')
