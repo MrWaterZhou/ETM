@@ -379,8 +379,7 @@ else:
                 rho_etm = model.rho.weight.cpu()
             except:
                 rho_etm = model.rho.cpu()
-            queries = ['andrew', 'woman', 'computer', 'sports', 'religion', 'man', 'love',
-                       'intelligence', 'money', 'politics', 'health', 'people', 'family']
+            queries = ['兵', '堡', '资源', '打野', '团战', '买', '卖']
             print('\n')
             print('ETM embeddings...')
             for word in queries:
