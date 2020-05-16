@@ -16,7 +16,7 @@ max_df = 0.7
 min_df = 10  # choose desired value for min_df
 
 # Read stopwords
-with open('stops.txt', 'r') as f:
+with open('stopwords-master/baidu_stopwords.txt', 'r') as f:
     stops = f.read().split('\n')
 
 # Read data
