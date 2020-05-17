@@ -111,7 +111,7 @@ if __name__ == '__main__':
             print('batch: {}/{}'.format(idx, len(indices)))
 
             for i, th in zip(ind, theta):
-                row = corpus[i]
+                row = corpus[i.numpy()]
                 topic = th.argsort().cpu().numpy()[::-1][0]
                 topic_re = topic_represent[int(topic)]
                 print("corpus:{}\n topic:{}\n pred:{}\n".format(row, topic_re, th[int(topic)]))
