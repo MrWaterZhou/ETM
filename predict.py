@@ -33,10 +33,11 @@ def get_batch(corpus, vocab_dict:dict, ind, vocab_size, device, emsize=300):
                 if idx not in count_dict:
                     count_dict[idx] = 0
                 count_dict[idx] += 1
-        token = np.array(count_dict.keys())
-        if len(token)==0:
+        if len(count_dict)==0:
+            token = np.array([])
             count = np.array([])
         else:
+            token = np.array(count_dict.keys())
             count = np.array([count_dict[i] for i in token])
         tokens.append(token)
         counts.append(count)
