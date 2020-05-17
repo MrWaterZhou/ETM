@@ -37,7 +37,7 @@ def get_batch(corpus, vocab_dict:dict, ind, vocab_size, device, emsize=300):
             token = np.array([])
             count = np.array([])
         else:
-            token = np.array(count_dict.keys())
+            token = np.array(list(count_dict.keys()))
             count = np.array([count_dict[i] for i in count_dict.keys()])
         tokens.append(token)
         counts.append(count)
