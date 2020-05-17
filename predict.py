@@ -46,12 +46,6 @@ def get_batch(corpus, vocab_dict:dict, ind, vocab_size, device, emsize=300):
     for i, doc_id in enumerate(ind):
         doc = tokens[doc_id]
         count = counts[doc_id]
-        if len(doc) == 1:
-            doc = [doc.squeeze()]
-            count = [count.squeeze()]
-        else:
-            doc = doc.squeeze()
-            count = count.squeeze()
         if doc_id != -1:
             for j, word in enumerate(doc):
                 data_batch[i, word] = count[j]
