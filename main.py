@@ -376,7 +376,7 @@ else:
                     corpus = ' '.join([vocab[i] for i in row[0]])
                     topic = th.argsort().cpu().numpy()[::-1][0]
                     topic_re = topic_represent[int(topic)]
-                    print("corpus:{}\n topic:{}\n".format(corpus,topic_re))
+                    print("corpus:{}\n topic:{}\n pred:{}\n".format(corpus,topic_re,th[int(topic)]))
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
 
