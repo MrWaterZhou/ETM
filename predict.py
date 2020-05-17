@@ -6,6 +6,7 @@ import pickle
 
 parser = argparse.ArgumentParser(description='The Embedded Topic Model')
 parser.add_argument('--num_topics', type=int, default=50, help='number of topics')
+parser.add_argument('--batch_size', type=int, default=1000, help='input batch size for training')
 
 parser.add_argument('--load_from', type=str,
                     default='results/etm_koa_K_50_Htheta_800_Optim_adam_Clip_0.0_ThetaAct_relu_Lr_0.005_Bsz_1000_RhoSize_300_trainEmbeddings_0',
