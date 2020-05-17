@@ -111,9 +111,9 @@ if __name__ == '__main__':
             print('batch: {}/{}'.format(idx, len(indices)))
 
             for i, th in zip(ind, theta):
-                row = corpus[i.numpy()]
+                row = corpus[i]
                 topic = th.argsort().cpu().numpy()[::-1][0]
                 topic_re = topic_represent[int(topic)]
-                print("corpus:{}\n topic:{}\n pred:{}\n".format(row, topic_re, th[int(topic)]))
+                print("corpus:{}\n topic:{}\n pred:{}\n".format(''.join(row), topic_re, th[int(topic)]))
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
