@@ -6,7 +6,7 @@ import pickle
 
 parser = argparse.ArgumentParser(description='The Embedded Topic Model')
 parser.add_argument('--num_topics', type=int, default=50, help='number of topics')
-parser.add_argument('--batch_size', type=int, default=1000, help='input batch size for training')
+parser.add_argument('--batch_size', type=int, default=100, help='input batch size for training')
 parser.add_argument('--bow_norm', type=int, default=1, help='normalize the bows or not')
 
 parser.add_argument('--load_from', type=str,
@@ -108,11 +108,11 @@ if __name__ == '__main__':
             thetaAvg += theta.sum(0).unsqueeze(0) / num_docs_train
             weighed_theta = sums * theta
             thetaWeightedAvg += weighed_theta.sum(0).unsqueeze(0)
-            if idx % 100 == 0 and idx > 0:
-                print('batch: {}/{}'.format(idx, len(indices)))
-                for row, th in zip(corpus[ind], theta):
-                    topic = th.argsort().cpu().numpy()[::-1][0]
-                    topic_re = topic_represent[int(topic)]
-                    print("corpus:{}\n topic:{}\n pred:{}\n".format(row, topic_re, th[int(topic)]))
+
+            print('batch: {}/{}'.format(idx, len(indices)))
+            for row, th in zip(corpus[ind], theta):
+                topic = th.argsort().cpu().numpy()[::-1][0]
+                topic_re = topic_represent[int(topic)]
+                print("corpus:{}\n topic:{}\n pred:{}\n".format(row, topic_re, th[int(topic)]))
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
