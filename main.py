@@ -338,7 +338,7 @@ else:
 
     with torch.no_grad():
         ## get document completion perplexities
-        test_ppl = evaluate(model, 'test', tc=args.tc, td=args.td)
+        # test_ppl = evaluate(model, 'test', tc=args.tc, td=args.td)
 
         ## get most used topics
         indices = torch.tensor(range(args.num_docs_train))
@@ -359,6 +359,8 @@ else:
             weighed_theta = sums * theta
             thetaWeightedAvg += weighed_theta.sum(0).unsqueeze(0)
             if idx % 100 == 0 and idx > 0:
+                print('theta\n', theta, '\n')
+                print('thetaAvg\n', thetaAvg, '\n')
                 print('batch: {}/{}'.format(idx, len(indices)))
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
