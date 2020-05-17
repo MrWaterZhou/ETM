@@ -18,31 +18,10 @@ parser.add_argument('--corpus', type=str, default='')
 parser.add_argument('--num_words', type=int, default=10, help='number of words for topic viz')
 
 
-def get_batch(corpus, vocab_dict:dict, ind, vocab_size, device, emsize=300):
+def get_batch(tokens, counts, ind, vocab_size, device, emsize=300):
     """fetch input data by batch."""
     batch_size = len(ind)
     data_batch = np.zeros((batch_size, vocab_size))
-
-    tokens = []
-    counts = []
-
-    for words in corpus:
-        count_dict = {}
-        for w in words:
-            if w in vocab_dict:
-                idx = vocab_dict[w]
-                if idx not in count_dict:
-                    count_dict[idx] = 0
-                count_dict[idx] += 1
-        if len(count_dict)==0:
-            token = np.array([])
-            count = np.array([])
-        else:
-            token = np.array(list(count_dict.keys()))
-            count = np.array([count_dict[i] for i in count_dict.keys()])
-        tokens.append(token)
-        counts.append(count)
-
 
     for i, doc_id in enumerate(ind):
         doc = tokens[doc_id]
@@ -74,6 +53,26 @@ if __name__ == '__main__':
     corpus = [x.strip().split() for x in corpus]
 
     num_docs_train = len(corpus)
+
+    tokens = []
+    counts = []
+
+    for words in corpus:
+        count_dict = {}
+        for w in words:
+            if w in vocab_dict:
+                idx = vocab_dict[w]
+                if idx not in count_dict:
+                    count_dict[idx] = 0
+                count_dict[idx] += 1
+        if len(count_dict)==0:
+            token = np.array([])
+            count = np.array([])
+        else:
+            token = np.array(list(count_dict.keys()))
+            count = np.array([count_dict[i] for i in count_dict.keys()])
+        tokens.append(token)
+        counts.append(count)
 
 
 
@@ -110,7 +109,9 @@ if __name__ == '__main__':
             thetaWeightedAvg += weighed_theta.sum(0).unsqueeze(0)
 
             print('batch: {}/{}'.format(idx, len(indices)))
-            for row, th in zip(corpus[ind], theta):
+
+            for i, th in zip(ind, theta):
+                row = corpus[i]
                 topic = th.argsort().cpu().numpy()[::-1][0]
                 topic_re = topic_represent[int(topic)]
                 print("corpus:{}\n topic:{}\n pred:{}\n".format(row, topic_re, th[int(topic)]))
