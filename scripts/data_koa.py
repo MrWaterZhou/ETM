@@ -17,7 +17,7 @@ min_df = 10  # choose desired value for min_df
 
 # Read stopwords
 with open('stopwords-master/baidu_stopwords.txt', 'r') as f:
-    stops = f.read().split('\n')
+    stops = set(f.read().split('\n'))
 
 # Read data
 print('reading data...')
@@ -43,6 +43,10 @@ def contains_numeric(w):
     return any(char.isdigit() for char in w)
     
 init_docs = init_docs_tr + init_docs_ts
+
+init_docs = [[w for w in line if not contains_numeric(w)] for line in init_docs]
+
+init_docs = [[w for w in line if not contains_punctuation(w)] for line in init_docs]
 
 init_docs = [" ".join(init_docs[doc]) for doc in range(len(init_docs))]
 
