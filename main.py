@@ -374,7 +374,7 @@ else:
                 print('batch: {}/{}'.format(idx, len(indices)))
                 for row,th in zip(train_tokens[ind],theta):
                     corpus = ' '.join([vocab[i] for i in row[0]])
-                    topic = th.argsort().numpy()[::-1][0]
+                    topic = th.argsort().cpu().numpy()[::-1][0]
                     topic_re = topic_represent[int(topic)]
                     print("corpus:{}\n topic:{}\n".format(corpus,topic_re))
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
