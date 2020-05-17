@@ -96,7 +96,7 @@ if __name__ == '__main__':
         thetaWeightedAvg = torch.zeros(1, args.num_topics).to(device)
         cnt = 0
         for idx, ind in enumerate(indices):
-            data_batch = get_batch(corpus, vocab_dict, ind, vocab_size, device)
+            data_batch = get_batch(tokens, counts, ind, vocab_size, device)
             sums = data_batch.sum(1).unsqueeze(1)
             cnt += sums.sum(0).squeeze().cpu().numpy()
             if args.bow_norm:
