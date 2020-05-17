@@ -371,7 +371,7 @@ else:
             weighed_theta = sums * theta
             thetaWeightedAvg += weighed_theta.sum(0).unsqueeze(0)
             if idx % 100 == 0 and idx > 0:
-                print('bow\n',[[vocab[int(i)] for i in bow] for bow in normalized_data_batch],'\n')
+                print('bow\n',normalized_data_batch,'\n')
                 print('theta\n', theta, '\n')
                 print('thetaAvg\n', thetaAvg, '\n')
                 print('batch: {}/{}'.format(idx, len(indices)))
