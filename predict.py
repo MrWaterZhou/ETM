@@ -73,6 +73,8 @@ if __name__ == '__main__':
     corpus = open(args.corpus, 'r').readlines()
     corpus = [x.strip().split() for x in corpus]
 
+    num_docs_train = len(corpus)
+
 
 
     with torch.no_grad():
@@ -89,7 +91,7 @@ if __name__ == '__main__':
             topic_represent.append(topic_words)
 
         ## get most used topics
-        indices = torch.tensor(range(args.num_docs_train))
+        indices = torch.tensor(range(num_docs_train))
         indices = torch.split(indices, args.batch_size)
         thetaAvg = torch.zeros(1, args.num_topics).to(device)
         thetaWeightedAvg = torch.zeros(1, args.num_topics).to(device)
@@ -103,7 +105,7 @@ if __name__ == '__main__':
             else:
                 normalized_data_batch = data_batch
             theta, _ = model.get_theta(normalized_data_batch)
-            thetaAvg += theta.sum(0).unsqueeze(0) / args.num_docs_train
+            thetaAvg += theta.sum(0).unsqueeze(0) / num_docs_train
             weighed_theta = sums * theta
             thetaWeightedAvg += weighed_theta.sum(0).unsqueeze(0)
             if idx % 100 == 0 and idx > 0:
