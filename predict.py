@@ -112,9 +112,12 @@ if __name__ == '__main__':
 
             for i, th in zip(ind, theta):
                 row = corpus[i]
-                topic = th.argsort().cpu().numpy()[::-1][0]
-                topic_re = topic_represent[int(topic)]
-                if th[int(topic)]>0.1:
-                    print("corpus:{}\n topic:{}\n pred:{}\n".format(''.join(row), topic_re, th[int(topic)]))
+                topics = th.argsort().cpu().numpy()[::-1]
+                for topic in topics:
+                    if th[int(topic)] > 0.1:
+                        topic_re = topic_represent[int(topic)]
+                        print("corpus:{}\n topic:{}\n pred:{}\n".format(''.join(row), ','.join(topic_re), th[int(topic)]))
+
+
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
