@@ -47,8 +47,9 @@ def get_batch(corpus, vocab_dict:dict, ind, vocab_size, device, emsize=300):
         doc = tokens[doc_id]
         count = counts[doc_id]
         if doc_id != -1:
-            for j, word in enumerate(doc):
-                data_batch[i, word] = count[j]
+            if len(doc)!=0:
+                for j, word in enumerate(doc):
+                    data_batch[i, word] = count[j]
     data_batch = torch.from_numpy(data_batch).float().to(device)
     return data_batch
 
