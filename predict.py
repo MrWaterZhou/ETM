@@ -114,7 +114,7 @@ if __name__ == '__main__':
                 row = corpus[i]
                 topics = th.argsort().cpu().numpy()[::-1]
                 for topic in topics:
-                    if th[int(topic)] > 0.1:
+                    if th[int(topic)] > 0.05:
                         topic_re = topic_represent[int(topic)]
                         print("corpus:{}\n topic:{}\n pred:{}\n".format(''.join(row), ','.join(topic_re), th[int(topic)]))
 
