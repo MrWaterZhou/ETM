@@ -16,6 +16,7 @@ parser.add_argument('--emb_path', type=str, default='data/koa/embeddings', help=
 parser.add_argument('--vocab_path', type=str, default='data/koa/vocab.pkl')
 parser.add_argument('--corpus', type=str, default='')
 parser.add_argument('--num_words', type=int, default=10, help='number of words for topic viz')
+parser.add_argument('--save_file',type=str, default='topic_result.csv')
 
 
 def get_batch(tokens, counts, ind, vocab_size, device, emsize=300):
@@ -74,7 +75,7 @@ if __name__ == '__main__':
         tokens.append(token)
         counts.append(count)
 
-
+    topic_result = []
 
     with torch.no_grad():
         ## show topics
@@ -110,6 +111,7 @@ if __name__ == '__main__':
 
             print('batch: {}/{}'.format(idx, len(indices)))
 
+
             for i, th in zip(ind, theta):
                 row = corpus[i]
                 topics = th.argsort().cpu().numpy()[::-1]
@@ -117,7 +119,14 @@ if __name__ == '__main__':
                     if th[int(topic)] > 0.1:
                         topic_re = topic_represent[int(topic)]
                         print("corpus:{}\n topic:{}\n pred:{}\n".format(''.join(row), ','.join(topic_re), th[int(topic)]))
+                        tmp = {'corpus':''.join(row),'topic':'topic_{}'.format(topic),'confidence':th[int(topic)]}
+                        topic_result.append(tmp)
+
 
 
         thetaWeightedAvg = thetaWeightedAvg.squeeze().cpu().numpy() / cnt
         print('\nThe 10 most used topics are {}'.format(thetaWeightedAvg.argsort()[::-1][:10]))
+        import pandas as pd
+
+        df = pd.DataFrame(topic_result)
+        df.to_csv(args.save_file,index=False)
